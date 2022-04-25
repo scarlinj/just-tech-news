@@ -71,21 +71,22 @@ User.init({
             return updatedUserData;
         }
     },
-    // the below causes errors - did adding hooks above break the code?  should this be a different format?
-    {
-        // TABLE CONFIGURATION OPTIONS GO HERE (https://sequelize.org/v5/manual/models-definition.html#configuration))
+    // the below causes errors - did adding hooks above break the code?  should this be a different format?  Add a function before {, similar to above?  Exsmple code does not have that.
+    // removed {} aroudn the below and this allowed npm to start
 
-        // pass in our imported sequelize connection (the direct connection to our database)
-        sequelize,
-        // don't automatically create createdAt/updatedAt timestamp fields
-        timestamps: false,
-        // don't pluralize name of database table
-        freezeTableName: true,
-        // use underscores instead of camel-casing (i.e. `comment_text` and not `commentText`)
-        underscored: true,
-        // make it so our model name stays lowercase in the database
-        modelName: 'user'
-    }
+    // TABLE CONFIGURATION OPTIONS GO HERE (https://sequelize.org/v5/manual/models-definition.html#configuration))
+
+    // pass in our imported sequelize connection (the direct connection to our database)
+    sequelize,
+    // don't automatically create createdAt/updatedAt timestamp fields
+    timestamps: false,
+    // don't pluralize name of database table
+    freezeTableName: true,
+    // use underscores instead of camel-casing (i.e. `comment_text` and not `commentText`)
+    underscored: true,
+    // make it so our model name stays lowercase in the database
+    modelName: 'user'
+
 });
 
 module.exports = User;
