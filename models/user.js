@@ -1,3 +1,5 @@
+// import Model and DataTypes from Sequelize
+// Model allows us to create model class.  Must use "extends" to assign properties to another class
 const {
     Model,
     DataTypes

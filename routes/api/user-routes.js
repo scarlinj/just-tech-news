@@ -23,8 +23,12 @@ router.get('/', (req, res) => {
 
 // GET /api/users/1
 router.get('/:id', (req, res) => {
+    // use findOne similar to findAll to select individual user
     User.findOne({
-            where: {
+        // when finding a user, do not want to expose their password - exclude this
+        attributes: { exclude: ['password'] },
+        // using the where option to indicate we want to find a user where its id value equals whatever req.params.id is
+        where: {
                 id: req.params.id
             }
         })
@@ -43,6 +47,7 @@ router.get('/:id', (req, res) => {
         });
 });
 
+// create a user
 // POST /api/users
 router.post('/', (req, res) => {
     // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
@@ -122,6 +127,7 @@ router.put('/:id', (req, res) => {
 
 // DELETE /api/users/1
 router.delete('/:id', (req, res) => {
+    // to delete data, use the .destroy() method
     User.destroy({
             where: {
                 id: req.params.id
