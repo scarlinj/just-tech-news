@@ -62,7 +62,7 @@ User.init({
         //         return newUserData
         //     });
         // }
-        // The async/await funciton below replaces the above beforeCreate function
+        // The async/await function below replaces the above beforeCreate function
         async beforeCreate(newUserData) {
             newUserData.password = await bcrypt.hash(newUserData.password, 10);
             return newUserData;

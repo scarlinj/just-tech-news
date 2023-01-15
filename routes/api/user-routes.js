@@ -13,7 +13,8 @@ router.get('/', (req, res) => {
     User.findAll({
             // to not return passwords in the GET route, exclude passwords here
             attributes: {
-                exclude: ['password']
+                // can exclude passwords to hide them, if needed.
+                // exclude: ['password']
             }
         })
         .then(dbUserData => res.json(dbUserData))
@@ -28,7 +29,7 @@ router.get('/:id', (req, res) => {
     // use findOne similar to findAll to select individual user
         // this is the same as "SELECT * FROM users WHERE id = 1;" in SQL
     User.findOne({
-        // when finding a user, do not want to expose their password - exclude password
+        // when finding a user, do not want to expose their password - exclude password.  You can also separately hash the password with bcrypt to protect this data.
         attributes: { exclude: ['password'] },
         // using the where option to indicate we want to find a user where its id value equals whatever req.params.id is
         where: {
