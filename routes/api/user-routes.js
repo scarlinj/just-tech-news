@@ -3,13 +3,15 @@ const {
     User
 } = require('../../models');
 
+// Do not use "user" in any routes - will take these routes and implement them to another router instance and then prefix with /user
+
 // GET /api/users
 router.get('/', (req, res) => {
     // Access our User model and run .findAll() method)
     // User inherits functionality from Sequelize Model class - findAll is one of those methods
     // this is the same as "SELECT * FROM users;" in SQL
     User.findAll({
-            // to not return passwords in the GET route
+            // to not return passwords in the GET route, exclude passwords here
             attributes: {
                 exclude: ['password']
             }
@@ -24,8 +26,9 @@ router.get('/', (req, res) => {
 // GET /api/users/1
 router.get('/:id', (req, res) => {
     // use findOne similar to findAll to select individual user
+        // this is the same as "SELECT * FROM users WHERE id = 1;" in SQL
     User.findOne({
-        // when finding a user, do not want to expose their password - exclude this
+        // when finding a user, do not want to expose their password - exclude password
         attributes: { exclude: ['password'] },
         // using the where option to indicate we want to find a user where its id value equals whatever req.params.id is
         where: {
@@ -51,6 +54,10 @@ router.get('/:id', (req, res) => {
 // POST /api/users
 router.post('/', (req, res) => {
     // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
+    // SQL would look like:  INSERT INTO users
+    //                      (username, email, password)
+    //                      VALUES
+    //                      ("Lernantino", "lernantino@gmail.com", "password1234");
     User.create({
             username: req.body.username,
             email: req.body.email,
@@ -101,7 +108,10 @@ router.post('/login', (req, res) => {
 // PUT /api/users/1
 router.put('/:id', (req, res) => {
     // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
-
+    // SQL would look like:
+    // UPDATE users
+    // SET username = "Lernantino", email = "lernantino@gmail.com", password = "newPassword1234"
+    // WHERE id = 1;
     // if req.body has exact key/value pairs to match the model, you can just use `req.body` instead
     // pass in req.body instead to only update what's passed through
     User.update(req.body, {

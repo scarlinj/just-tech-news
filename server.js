@@ -17,7 +17,8 @@ app.use(routes);
 // turn on connection to db and server - "sync" means Sequelize takes models and connects them to associate database tables.
 // if this doesn't find a table, it will create one
 sequelize.sync({
-    // force: true would cause Sequelize to drop and recreate database tables on startup.  We want database to understand something changed.
+    // force: true would cause Sequelize to drop and recreate database tables on startup.  We want database to understand when we change something, 
+    // so this allows for us to make those changes while updating the project.
     force: false
 }).then(() => {
     app.listen(PORT, () => console.log('Now listening'));
