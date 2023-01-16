@@ -21,6 +21,7 @@ router.get('/', (req, res) => {
         .catch(err => {
             console.log(err);
             res.status(500).json(err);
+            return
         });
 });
 
@@ -74,6 +75,7 @@ router.post('/', (req, res) => {
 router.post('/login', (req, res) => {
     // Query operation
     // expects {email: 'lernantino@gmail.com', password: 'password1234'}
+    // if find a user, can call function to check password
     User.findOne({
         where: {
             email: req.body.email
@@ -85,10 +87,6 @@ router.post('/login', (req, res) => {
             });
             return;
         }
-
-        res.json({
-            user: dbUserData
-        });
 
         // Verify user
         const validPassword = dbUserData.checkPassword(req.body.password);
