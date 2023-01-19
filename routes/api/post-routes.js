@@ -55,4 +55,43 @@ router.get('/:id', (req, res) => {
     });
 });
 
+router.post('/', (req, res) => {
+  // expects {title: 'Taskmaster goes public!', post_url: 'https://taskmaster.com/press', user_id: 1}
+  Post.create({
+    title: req.body.title,
+    post_url: req.body.post_url,
+    user_id: req.body.user_id
+  })
+    .then(dbPostData => res.json(dbPostData))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
+// PUT /api/users/1
+// we used the request parameter to find the post, then used the req.body.title value to replace the title of the post. 
+// In the response, we sent back data that has been modified and stored in the database.
+router.put('/:id', (req, res) => {
+  Post.update( {
+          title: req.body.title
+      },
+      {where: { id: req.params.id }
+    }
+    )
+      .then(dbPostData => {
+          if (!dbPostData[0]) {
+              res.status(404).json({
+                  message: 'No post found with this id'
+              });
+              return;
+          }
+          res.json(dbPostData);
+      })
+      .catch(err => {
+          console.log(err);
+          res.status(500).json(err);
+      });
+});
+
 module.exports = router;
