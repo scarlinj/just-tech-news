@@ -1,11 +1,13 @@
 const router = require('express').Router();
+const sequelize = require('../../config/connection');
 const {
     // include the User route to retrieve information about user associated with each post.
     // In a query to the post table, we would like to retrieve not only information about 
     // each post, but also the user that posted it. With the foreign key, user_id, we can 
     // form a JOIN, an essential characteristic of the relational data model.
     Post,
-    User
+    User,
+    Vote
 } = require('../../models');
 
 // get all posts along with the users
@@ -70,6 +72,16 @@ router.post('/', (req, res) => {
     });
 });
 
+// PUT /api/posts/upvote
+router.put('/upvote', (req, res) => {
+  Vote.create({
+    user_id: req.body.user_id,
+    post_id: req.body.post_id
+  })
+    .then(dbPostData => res.json(dbPostData))
+    .catch(err => res.json(err));
+});
+
 // PUT /api/users/1
 // we used the request parameter to find the post, then used the req.body.title value to replace the title of the post. 
 // In the response, we sent back data that has been modified and stored in the database.
@@ -93,7 +105,35 @@ router.put('/:id', (req, res) => {
           console.log(err);
           res.status(500).json(err);
       });
+      // create the vote
+Vote.create({
+  user_id: req.body.user_id,
+  post_id: req.body.post_id
+}).then(() => {
+  // then find the post we just voted on
+  return Post.findOne({
+    where: {
+      id: req.body.post_id
+    },
+    attributes: [
+      'id',
+      'post_url',
+      'title',
+      'created_at',
+      // use raw MySQL aggregate function query to get a count of how many votes the post has and return it under the name `vote_count`
+      [
+        sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'),
+        'vote_count'
+      ]
+    ]
+  })
+  .then(dbPostData => res.json(dbPostData))
+  .catch(err => {
+    console.log(err);
+    res.status(400).json(err);
+  });
 });
+},
 
 router.delete('/:id', (req, res) => {
   Post.destroy({
@@ -112,6 +152,6 @@ router.delete('/:id', (req, res) => {
       console.log(err);
       res.status(500).json(err);
     });
-});
+}));
 
 module.exports = router;

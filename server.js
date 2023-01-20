@@ -17,7 +17,7 @@ app.use(routes);
 // turn on connection to db and server - "sync" means Sequelize takes models and connects them to associate database tables.
 // if this doesn't find a table, it will create one
 sequelize.sync({
-    // cahnge this when you create new databases
+    // change this when you create new databases
     // "force: true" would cause Sequelize to drop and recreate database tables on startup.  We want database to understand when we change something, 
     // so this allows for us to make those changes while updating the project.
     // If we change the value of the force property to true, then the database connection must sync with the model definitions and associations. 
