@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
         .catch(err => {
             console.log(err);
             res.status(500).json(err);
-            return
+            return;
         });
 });
 
@@ -89,6 +89,8 @@ router.post('/login', (req, res) => {
         }
 
         // Verify user
+        // The instance method below is called on the user retrieved from the database, dbUserData. 
+        // Because the instance method returns a Boolean, can use it in a conditional statement to check whether a user has been verified.
         const validPassword = dbUserData.checkPassword(req.body.password);
         if (!validPassword) {
             res.status(400).json({
