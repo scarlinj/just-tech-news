@@ -86,9 +86,6 @@ router.post('/login', (req, res) => {
             return;
         }
 
-        // res.json({
-        //     user: dbUserData
-        // });
 
         // Verify user
         // The instance method below is called on the user retrieved from the database, dbUserData. 
