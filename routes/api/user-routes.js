@@ -114,7 +114,7 @@ router.put('/:id', (req, res) => {
     // if req.body has exact key/value pairs to match the model, you can just use `req.body` instead
     // pass in req.body instead to only update what's passed through
     User.update(req.body, {
-            individualHooks: tru,
+            individualHooks: true,
             where: {
                 id: req.params.id
             }

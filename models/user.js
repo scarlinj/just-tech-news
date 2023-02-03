@@ -10,8 +10,10 @@ const bcrypt = require('bcrypt');
 // create our User model
 class User extends Model {
     // set up method to run on instance data (per user) to check password
-    // encrypt password with bcrypt - access User properties with "this", then extend password
+    // create an instance method on the User model definition to access the password property of each user instance
+    // include an instance method called checkPassword that takes in the plaintext password retrieved from the client request at req.body.email and compares that with the hashed password.
     checkPassword(loginPw) {
+        // encrypt password with bcrypt - access User properties with "this", then extend password
         return bcrypt.compareSync(loginPw, this.password);
     }
 }
