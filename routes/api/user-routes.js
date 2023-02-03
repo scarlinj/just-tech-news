@@ -20,6 +20,7 @@ router.get('/', (req, res) => {
         .catch(err => {
             console.log(err);
             res.status(500).json(err);
+            return;
         });
 });
 
@@ -72,7 +73,7 @@ router.post('/', (req, res) => {
 
 router.post('/login', (req, res) => {
     // Query operation
-    // expects {email: 'lernantino@gmail.com', password: 'password1234'}
+    // expects {email: 'user@gmail.com', password: 'password1234'}
     User.findOne({
         where: {
             email: req.body.email
@@ -85,11 +86,13 @@ router.post('/login', (req, res) => {
             return;
         }
 
-        res.json({
-            user: dbUserData
-        });
+        // res.json({
+        //     user: dbUserData
+        // });
 
         // Verify user
+        // The instance method below is called on the user retrieved from the database, dbUserData. 
+        // Because the instance method returns a Boolean, can use it in a conditional statement to check whether a user has been verified.
         const validPassword = dbUserData.checkPassword(req.body.password);
         if (!validPassword) {
             res.status(400).json({
