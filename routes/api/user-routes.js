@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {
-    User
+    User, Post, Vote
 } = require('../../models');
 
 // Do not use "user" in any routes - will take these routes and implement them to another router instance and then prefix with /user
@@ -31,11 +31,23 @@ router.get('/:id', (req, res) => {
         // this is the same as "SELECT * FROM users WHERE id = 1;" in SQL
     User.findOne({
         // when finding a user, do not want to expose their password - exclude password.  You can also separately hash the password with bcrypt to protect this data.
-        // attributes: { exclude: ['password'] },
+        attributes: { exclude: ['password'] },
         // using the where option to indicate we want to find a user where its id value equals whatever req.params.id is
         where: {
                 id: req.params.id
-            }
+            },
+        include: [
+            {
+                model: Post,
+                attributes: ['id', 'title', 'post_url', 'created_at']
+                },
+                {
+                model: Post,
+                attributes: ['title'],
+                through: Vote,
+                as: 'voted_posts'
+                }
+            ]
         })
         .then(dbUserData => {
             if (!dbUserData) {
