@@ -1,13 +1,16 @@
 const router = require('express').Router();
 const {
-    User
+    User,
+    Post,
+    Vote,
+    Comment
 } = require('../../models');
 
 // Do not use "user" in any routes - will take these routes and implement them to another router instance and then prefix with /user
 
 // GET /api/users
 router.get('/', (req, res) => {
-    // Access our User model and run .findAll() method)
+    // Access our User model and run .,findAll() method)
     // User inherits functionality from Sequelize Model class - findAll is one of those methods
     // this is the same as "SELECT * FROM users;" in SQL
     User.findAll({
@@ -35,7 +38,28 @@ router.get('/:id', (req, res) => {
         // using the where option to indicate we want to find a user where its id value equals whatever req.params.id is
         where: {
                 id: req.params.id
-            }
+            },
+            include: [
+                {
+                  model: Post,
+                  attributes: ['id', 'title', 'post_url', 'created_at']
+                },
+                // include the Comment model here:
+                {
+                  model: Comment,
+                  attributes: ['id', 'comment_text', 'created_at'],
+                  include: {
+                    model: Post,
+                    attributes: ['title']
+                  }
+                },
+                {
+                  model: Post,
+                  attributes: ['title'],
+                  through: Vote,
+                  as: 'voted_posts'
+                }
+              ]
         })
         .then(dbUserData => {
             if (!dbUserData) {
