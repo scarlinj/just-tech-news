@@ -21,7 +21,7 @@ This is a tech news website where users can post, upvote, and comment on links t
 
 See a screenshot for the site below:
 
-![Image of the homepage](./JustTechNews Homepage.JPG "JustTechNews Homepage")
+![Image of the homepage](/images/JustTechNews%20Homepage.JPG)
 
 ## Features
 
