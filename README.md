@@ -31,6 +31,8 @@ The homepage is a feed of the current site and posts.  Click each header to open
 
 Create an account to make a post, add a comment, or delete your posts/comments.  You cann freely browse the content within the site.
 
+![Image of Create Post page](/images/Create%20Post.JPG)
+
 ## User Story
 
 As a technology enthusiast, I want to join a community to keep up to date on the latest technology news.
