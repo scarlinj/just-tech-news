@@ -29,7 +29,7 @@ The homepage is a feed of the current site and posts.  Click each header to open
 
 ### Usage
 
-Create an account to make a post, add a comment, or delete your posts/comments.  You cann freely browse the content within the site.
+Create an account to make a post, add a comment, or delete your posts/comments.  You can freely browse the content within the site.
 
 ![Image of Create Post page](/images/Create%20Post.JPG)
 
