@@ -33,6 +33,8 @@ Create an account to make a post, add a comment, or delete your posts/comments. 
 
 ![Image of Create Post page](/images/Create%20Post.JPG)
 
+![Image of Post page with comments](/images/Comment%20and%20Vote%20on%20Posts.JPG)
+
 ## User Story
 
 As a technology enthusiast, I want to join a community to keep up to date on the latest technology news.
