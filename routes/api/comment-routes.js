@@ -5,7 +5,7 @@ router.get('/', (req, res) => {
     // console.log('======================');
     Comment.findAll({
       // Query configurationcreated_at is automatically generated because of Sequelize timestamp
-      // 
+      
       attributes: ['id', 'comment_text', 'user_id', 'post_id', 'updated_at', 'created_at'],
       order: [['created_at', 'DESC']],
     include: [
