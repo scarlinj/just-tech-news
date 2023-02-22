@@ -13,7 +13,7 @@ html {
 
 a {
     text-decoration: none;
-    color: #225ca3;
+    color: #102136;
     font-weight: bold;
     transition: color .1s;
 }
@@ -78,7 +78,7 @@ form label {
 }
 
 header {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #cccccc4d;
     display: flex;
     justify-content: space-between;
     align-items: center;

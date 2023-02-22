@@ -1,16 +1,26 @@
+const path = require('path');
 const express = require('express');
-const routes = require('./routes');
+const routes = require('./controllers');
 //import  sequelize from config/connection.js
 const sequelize = require('./config/connection');
+// Use handlebars as template engine
+const exphbs = require('express-handlebars');
+const hbs = exphbs.create({});
 
 const app = express();
 // This PORT uses Heroku's process.env.PORT value when deployed and 3001 when run locally
+// must call app below, since it is defined above
 const PORT = process.env.PORT || 3001;
 
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
 app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
+
+// include stylesheet in public directory 
+app.use(express.static(path.join(__dirname, 'public')));
 
 // turn on routes
 app.use(routes);
