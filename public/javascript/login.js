@@ -10,7 +10,8 @@ async function signupFormHandler(event) {
 
     // must have all three before making POST request: username, email, password
     if (username && email && password) {
-    // make a fetch() POST request to /api/users/ - assign this to variable "response" to avoid using .catch or .then in the argument
+    // make a fetch() POST request to /api/users/ - assign this to variable "response" in order to avoid using .catch or .then in the argument
+    // to use await, just add "await" before the function
     const response = await fetch('/api/users', {
         method: 'post',
         body: JSON.stringify({
@@ -20,7 +21,7 @@ async function signupFormHandler(event) {
         }),
         headers: { 'Content-Type': 'application/json' }
     });
-        // check the response status
+        // check the response status - add error handling by using ".ok" after response call.  If response is OK, perform action.  Otherwise, perform other action.
         if (response.ok) {
             console.log('success');
         } else {
@@ -36,7 +37,7 @@ async function loginFormHandler(event) {
 
     const email = document.querySelector('#email-login').value.trim();
     const password = document.querySelector('#password-login').value.trim();
-
+    
     if (email && password) {
     const response = await fetch('/api/users/login', {
         method: 'post',

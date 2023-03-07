@@ -9,6 +9,7 @@ const hbs = exphbs.create({});
 // express-session library allows us to connect to the back end
 const session = require('express-session');
 // connect-session-sequelize library automatically stores the sessions created by express-session into our database
+// first, require npm module connect-session-sequelize, then pass through session.Store property
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const app = express();
@@ -18,14 +19,17 @@ const PORT = process.env.PORT || 3001;
 
 // Use a secret stored in the .env file
 const sess = {
-    // store the secret below (will be something other than "super secret secret")
-    secret: 'Super secret secret',
-    // tell session to use cookies with cookie: {}
+    // store the secret below (will be something other than "super secret secret") - cookie read by server, compared to secret to make sure it wasn't modified by client.
+    secret: process.env.SESSION_SECRET,
+    // tell session to use cookies with cookie: {} (if you want to set further options for the cookie, such as maximum age, add options to this object)
     cookie: {},
+    // resave forces session to be saved to session.Store, even if cookie hasn't been modified.  Default is true, but default is deprecated and the recommended setting is False.
     resave: false,
+    // when make a new session, session is saved as part of Store
     saveUninitialized: true,
+    // initialize sequelizeStore and pass through value of object of "db: sequlize."  Will create connection with db, set up session table, and save session in db. 
     store: new SequelizeStore({
-    db: sequelize
+        db: sequelize
     })
 };
 

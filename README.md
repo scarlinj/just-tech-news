@@ -1,6 +1,6 @@
 # Just Tech News
 
- This is a tech news website where users can post, upvote, and comment on links to news articles. This site demonstrates Object Relational Mapping through the Sequelize ORM library.  This manages objects using JavaScript and translates the code into database schema and queries using SQL.
+ This is a tech news website where users can post, upvote, and comment on links to news articles. This manages objects using JavaScript and translates the code into database schema and queries using SQL.  I created this to demonstrate Object Relational Mapping through the Sequelize ORM library.  
 
 ## Table of contents
 

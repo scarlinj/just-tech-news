@@ -28,8 +28,18 @@ router.get('/', (req, res) => {
         });
 });
 
-// GET /api/users/1
+// GET /api/users/1 - find a user's profile page
 router.get('/:id', (req, res) => {
+    // track number of times user visits their profile page
+    if(!req.session.views){
+        // if the views counter does not exist, create it
+        req.session.views = 1;
+        console.log('This is your first visit.');
+    } else {
+        // if it does exist, increase views by one
+        request.session.views ++
+        console.log(`You have visited ${request.session.views} times.`)
+    }
     // use findOne similar to findAll to select individual user
         // this is the same as "SELECT * FROM users WHERE id = 1;" in SQL
     User.findOne({
@@ -95,7 +105,7 @@ router.post('/', (req, res) => {
             req.session.user_id = dbUserData.id;
             req.session.username = dbUserData.username;
             req.session.loggedIn = true;
-        
+        // make sure the session created before sending back response, so variable wrapped in a callback
             res.json(dbUserData);
             });
         })
