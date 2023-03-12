@@ -53,6 +53,7 @@ async function loginFormHandler(event) {
         console.log("login successful.")
     } else {
         alert(response.statusText);
+        document.location.replace('/');
         console.log("login did not work.")
     }
     }

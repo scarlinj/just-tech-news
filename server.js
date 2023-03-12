@@ -55,7 +55,7 @@ sequelize.sync({
     // so this allows for us to make those changes while updating the project.
     // If we change the value of the force property to true, then the database connection must sync with the model definitions and associations. 
     // By forcing the sync method to true, we will make the tables re-create if there are any association changes
-    force: true
+    force: false
 }).then(() => {
     app.listen(PORT, () => console.log(`Now listening on port ${PORT}`));
 });
