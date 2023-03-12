@@ -45,9 +45,11 @@ router.get('/', (req, res) => {
       });
   });
 
+// check for a session, then redirect to homepage if session exists
 router.get('/login', (req, res) => {
   if (req.session.loggedIn) {
     res.redirect('/');
+    console.log("redirect to home.");
     return;
   }
     // do not need any variables - do not need a second argument to render login page
