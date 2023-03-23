@@ -1,11 +1,12 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
-const { Post, User, Comment } = require('../models');
+const { Post, User, Comment, Vote } = require('../models');
 
 // render a homepage, since we don't have the HTML
 router.get('/', (req, res) => {
 
-  console.log(req.session);
+  // console.log(req.session);
+  console.log('loaded home-routes');
 
     Post.findAll({
     attributes: [
