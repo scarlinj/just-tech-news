@@ -38,7 +38,7 @@ router.get('/', (req, res) => {
         // pass a single post object into the homepage template
         console.log(dbPostData[0]);
         // render the posts array in the homepage template
-        res.render('homepage', { posts });
+        res.render('homepage', { posts, loggedIn: req.session.loggedIn });
       })
       .catch(err => {
         console.log(err);

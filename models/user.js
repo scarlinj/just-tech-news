@@ -60,11 +60,7 @@ User.init({
 }, {
     hooks: {
         // set up beforeCreate lifecycle "hook" functionality
-        // beforeCreate(userData) {
-        //     return bcrypt.hash(userData.password, 10).then(newUserData => {
-        //         return newUserData
-        //     });
-        // }
+
         // The async/await function below replaces the above beforeCreate function
         async beforeCreate(newUserData) {
             newUserData.password = await bcrypt.hash(newUserData.password, 10);
@@ -76,7 +72,7 @@ User.init({
             return updatedUserData;
         }
     },
-    // the below causes errors - did adding hooks above break the code?  should this be a different format?  Add a function before {, similar to above?  Exsmple code does not have that.
+    // the below causes errors - did adding hooks above break the code?  should this be a different format?  Add a function before {, similar to above?  Example code does not have that.
     // removed {} aroudn the below and this allowed npm to start
 
     // TABLE CONFIGURATION OPTIONS GO HERE (https://sequelize.org/v5/manual/models-definition.html#configuration))

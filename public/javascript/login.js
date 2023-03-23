@@ -17,11 +17,10 @@ async function loginFormHandler(event) {
 
     if (response.ok) {
         document.location.replace('/dashboard');
-        console.log("login successful.")
     } else {
         alert(response.statusText);
         document.location.replace('/');
-        console.log("login did not work.")
+        console.log('response.statusText')
     }
     }
 }
@@ -52,7 +51,7 @@ async function signupFormHandler(event) {
         // check the response status - add error handling by using ".ok" after response call.  If response is OK, perform action.  Otherwise, perform other action.
         if (response.ok) {
             console.log('success');
-            document.location.replace('/');
+            document.location.replace('/dashboard');
         } else {
             alert(response.statusText);
             return false;
