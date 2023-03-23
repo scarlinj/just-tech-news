@@ -168,7 +168,6 @@ router.post('/logout', (req, res) => {
     }
     else {
         res.status(404).end();
-        console.log("user has logged out.")
     }
 });
 

@@ -81,7 +81,7 @@ User.init({
     sequelize,
     // don't automatically create createdAt/updatedAt timestamp fields
     timestamps: false,
-    // don't pluralize name of database table
+    // don't pluralize name of database table (sequelize will by default pluralize the table name, if not frozen)
     freezeTableName: true,
     // use underscores instead of camel-casing (i.e. `comment_text` and not `commentText`)
     underscored: true,

@@ -2,7 +2,7 @@ const router = require('express').Router();
 const sequelize = require('../config/connection');
 const { Post, User, Comment, Vote } = require('../models');
 
-// render a homepage, since we don't have the HTML
+// render a homepage, since we don't have the HTML.  This gets all posts.
 router.get('/', (req, res) => {
 
   // console.log(req.session);
