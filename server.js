@@ -1,21 +1,22 @@
 const path = require('path');
-const express = require('express');
 const routes = require('./controllers');
-//import  sequelize from config/connection.js
-const sequelize = require('./config/connection');
+const express = require('express');
 // Use handlebars as template engine
 const exphbs = require('express-handlebars');
-const hbs = exphbs.create({});
 // express-session library allows us to connect to the back end
 const session = require('express-session');
-// connect-session-sequelize library automatically stores the sessions created by express-session into our database
-// first, require npm module connect-session-sequelize, then pass through session.Store property
-const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const app = express();
 // This PORT uses Heroku's process.env.PORT value when deployed and 3001 when run locally
 // must call app below, since it is defined above
 const PORT = process.env.PORT || 3001;
+//import  sequelize from config/connection.js
+const sequelize = require('./config/connection');
+// connect-session-sequelize library automatically stores the sessions created by express-session into our database
+// first, require npm module connect-session-sequelize, then pass through session.Store property
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+
+const hbs = exphbs.create({});
 
 // Use a secret stored in the .env file
 const sess = {
@@ -33,13 +34,15 @@ const sess = {
     })
 };
 
+app.use(session(sess));
+
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.use(express.json());
 app.use(express.urlencoded({
-    extended: true
+    extended: false
 }));
-app.use(session(sess));
+
 
 // include stylesheet in public directory 
 app.use(express.static(path.join(__dirname, 'public')));

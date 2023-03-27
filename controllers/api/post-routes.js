@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const sequelize = require('../../config/connection');
 const {
     // include the User route to retrieve information about user associated with each post.
     // In a query to the post table, we would like to retrieve not only information about 
@@ -10,13 +9,16 @@ const {
     Vote,
     Comment
 } = require('../../models');
+const sequelize = require('../../config/connection');
+
+// Do not use "post" in any routes - will take these routes and implement them to another router instance and then prefix with /post
 
 // get all posts along with the users
 router.get('/', (req, res) => {
-    // console.log('======================');
+    console.log('======================');
     Post.findAll({
       // Query configurationcreated_at is automatically generated because of Sequelize timestamp
-      // 
+      
       attributes: ['id', 'post_url', 'title', 'created_at', [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']],
       order: [['created_at', 'DESC']],
     include: [
@@ -150,7 +152,7 @@ router.put('/:id', (req, res) => {
 //     res.status(400).json(err);
 //   });
 // });
-},
+}),
 
 router.delete('/:id', (req, res) => {
   Post.destroy({
@@ -169,6 +171,6 @@ router.delete('/:id', (req, res) => {
       console.log(err);
       res.status(500).json(err);
     });
-}));
+});
 
 module.exports = router;
