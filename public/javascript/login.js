@@ -19,7 +19,7 @@ async function loginFormHandler(event) {
         document.location.replace('/dashboard');
     } else {
         alert(response.statusText);
-        document.location.replace('/');
+        document.location.replace('/login');
         console.log(response.statusText);
         console.log('didnt load.');
     }
