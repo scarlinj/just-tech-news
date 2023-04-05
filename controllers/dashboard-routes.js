@@ -3,7 +3,7 @@ const sequelize = require('../config/connection');
 const { Post, User, Comment } = require('../models');
 
 // render a user dashboard, since we don't have the HTML.  This gets all posts for the user.
-router.get('/', (req, res) => {
+router.get('/dashboard', (req, res) => {
 
     // console.log(req.session);
     console.log('loaded dashboard-routes');
