@@ -120,6 +120,7 @@ router.get('/post/:id', (req, res) => {
 // render a dashboard after logged in.  This gets user posts.
 router.get('/dashboard', (req, res) => {
 
+  console.log("loaded dashboard controller")
   Post.findAll({
   attributes: [
       'id',
