@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { Comment, User } = require('../../models');
+const userAuth = require('../../utils/auth');
 
 // Do not use "comment" in any routes - will take these routes and implement them to another router instance and then prefix with /comment
 
@@ -25,7 +26,7 @@ router.get('/', (req, res) => {
     });
 });
 
-router.post('/', (req, res) => {
+router.post('/', userAuth, (req, res) => {
     Comment.create({
         comment_text: req.body.comment_text,
         user_id: req.body.user_id,
@@ -38,7 +39,7 @@ router.post('/', (req, res) => {
         });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', userAuth, (req, res) => {
   Comment.destroy({
     where: {
       id: req.params.id

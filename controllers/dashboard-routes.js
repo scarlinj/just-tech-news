@@ -1,12 +1,16 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
 const { Post, User, Comment } = require('../models');
+const userAuth = require('../utils/auth')
 
 // render a user dashboard, since we don't have the HTML.  This gets all posts for the user.
-router.get('/dashboard', (req, res) => {
+router.get('/', userAuth, (req, res) => {
 
     // console.log(req.session);
     console.log('loaded dashboard-routes');
+
+    res.render('dashboard', {loggedIn: true});
+
 
     Post.findAll({
         where: {
@@ -41,7 +45,7 @@ router.get('/dashboard', (req, res) => {
         const posts = dbPostData.map(post => post.get({ plain: true }));
           // pass a single post object into the dashboard template
         console.log(dbPostData[0]);
-          // render the posts array in the homepage template
+          // render the posts array in the dashboard template
         res.render('dashboard', { posts, loggedIn: true });
         })
         .catch(err => {
@@ -50,7 +54,7 @@ router.get('/dashboard', (req, res) => {
         });
     });
 
-    router.get('/edit/:id', (req, res) => {
+    router.get('/edit/:id', userAuth, (req, res) => {
     Post.findOne({
     where: {
         id: req.params.id

@@ -5,6 +5,7 @@ const {
     Vote,
     Comment
 } = require('../../models');
+const userAuth = require('../../utils/auth');
 
 // Do not use "user" in any routes - will take these routes and implement them to another router instance and then prefix with /user
 
@@ -88,13 +89,13 @@ router.get('/:id', (req, res) => {
 
 // create a user
 // POST /api/users
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
     // SQL would look like:  INSERT INTO users
     //                      (username, email, password)
     //                      VALUES
     //                      ("Lernantino", "lernantino@gmail.com", "password1234");
-    User.create({
+    await User.create({
             username: req.body.username,
             email: req.body.email,
             password: req.body.password
@@ -115,47 +116,52 @@ router.post('/', (req, res) => {
         });
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     // Query operation
     // expects {email: 'lernantino@gmail.com', password: 'password1234'}
     // if find a user, can call function to check password
-    User.findOne({
+    try {
+        const dbUserData = await User.findOne({
         where: {
             email: req.body.email
-        }
-    }).then(dbUserData => {
-        if (!dbUserData) {
-            res.status(400).json({
-                message: 'No user with that email address!'
-            });
-            return;
-        }
-
-        // Verify user
-        // The instance method below is called on the user retrieved from the database, dbUserData. 
-        // Because the instance method returns a Boolean, can use it in a conditional statement to check whether a user has been verified.
-        const validPassword = dbUserData.checkPassword(req.body.password);
-
-        if (!validPassword) {
-            res.status(400).json({
-                message: 'Incorrect password!'
-            });
-            return;
-        }
-
-        req.session.save(() => {
-            // declare session variables
-            // the below gives our server easy access to the user's user_id, username, and a Boolean describing whether or not the user is logged in.
-            req.session.user_id = dbUserData.id;
-            req.session.username = dbUserData.username;
-            req.session.loggedIn = true;
-
-        res.json({
-            user: dbUserData,
-            message: 'You are now logged in!'
-        });
+        },
     });
-});
+
+    if (!dbUserData) {
+        res.status(400).json({
+            message: 'No user with that email address!'
+        });
+        return;
+    }
+
+    // Verify user
+    // The instance method below is called on the user retrieved from the database, dbUserData. 
+    // Because the instance method returns a Boolean, can use it in a conditional statement to check whether a user has been verified.
+    const validPassword = await dbUserData.checkPassword(req.body.password);
+
+    if (!validPassword) {
+        res.status(400).json({
+            message: 'Incorrect password!'
+        });
+        return;
+    }
+
+    req.session.save(() => {
+        // declare session variables
+        // the below gives our server easy access to the user's user_id, username, and a Boolean describing whether or not the user is logged in.
+        req.session.user_id = dbUserData.id;
+        req.session.username = dbUserData.username;
+        req.session.loggedIn = true;
+
+    res.json({
+        user: dbUserData,
+        message: 'You are now logged in!'
+    });
+    });
+    } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+    }
 });
 
 router.post('/logout', (req, res) => {
@@ -172,7 +178,7 @@ router.post('/logout', (req, res) => {
 });
 
 // PUT /api/users/1
-router.put('/:id', (req, res) => {
+router.put('/:id', userAuth, (req, res) => {
     // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
     // SQL would look like:
     // UPDATE users
@@ -202,7 +208,7 @@ router.put('/:id', (req, res) => {
 });
 
 // DELETE /api/users/1
-router.delete('/:id', (req, res) => {
+router.delete('/:id', userAuth, (req, res) => {
     // to delete data, use the .destroy() method
     User.destroy({
             where: {
