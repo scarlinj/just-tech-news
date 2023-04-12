@@ -9,8 +9,6 @@ router.get('/', userAuth, (req, res) => {
     // console.log(req.session);
     console.log('loaded dashboard-routes');
 
-    res.render('dashboard', {loggedIn: true});
-
 
     Post.findAll({
         where: {
@@ -43,8 +41,10 @@ router.get('/', userAuth, (req, res) => {
           // entire array of posts to be in the template
           // This will loop over and map each Sequelize object into a serialized version of itself, saving the results in a new posts array, to plug into template
         const posts = dbPostData.map(post => post.get({ plain: true }));
+
           // pass a single post object into the dashboard template
         console.log(dbPostData[0]);
+        
           // render the posts array in the dashboard template
         res.render('dashboard', { posts, loggedIn: true });
         })

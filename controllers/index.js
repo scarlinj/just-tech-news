@@ -9,7 +9,7 @@ router.use('/', homeRoutes);
 router.use('/dashboard', dashboardRoutes);
 
 // use the below for instances where endpoint doesn't exist
-router.use((req, res) => {
+router.use((res) => {
     res.status(404).end();
 });
 

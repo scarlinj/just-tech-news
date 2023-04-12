@@ -5,7 +5,7 @@ const userAuth = require('../../utils/auth');
 // Do not use "comment" in any routes - will take these routes and implement them to another router instance and then prefix with /comment
 
 
-router.get('/', (req, res) => {
+router.get('/', (res) => {
     // console.log('======================');
     Comment.findAll({
       // Query configuration created_at is automatically generated because of Sequelize timestamp

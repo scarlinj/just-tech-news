@@ -15,9 +15,9 @@ const userAuth = require('../../utils/auth');
 
 // Do not use "post" in any routes - will take these routes and implement them to another router instance and then prefix with /post
 
-// get all posts along with the users
-router.get('/', async (req, res) => {
-    console.log('======================');
+// get all posts along with the users - removed "req" in the router.get call, since I don't requst specific attribute
+router.get('/', async (res) => {
+    console.log('loaded post-routes');
     Post.findAll({
       // Query configurationcreated_at is automatically generated because of Sequelize timestamp
       
@@ -95,13 +95,14 @@ router.post('/', userAuth, (req, res) => {
 
 // PUT /api/posts/upvote
 router.put('/upvote', userAuth, (req, res) => {
-  Vote.create({
+  if (req.session) {
+    Vote.create({
     user_id: req.body.user_id,
     post_id: req.body.post_id
   })
     .then(dbPostData => res.json(dbPostData))
     .catch(err => res.json(err));
-});
+}});
 
 // PUT /api/users/1
 // we used the request parameter to find the post, then used the req.body.title value to replace the title of the post. 
