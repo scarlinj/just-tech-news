@@ -10,7 +10,7 @@ const userAuth = require('../../utils/auth');
 // Do not use "user" in any routes - will take these routes and implement them to another router instance and then prefix with /user
 
 // GET /api/users
-router.get('/', (res) => {
+router.get('/', (req, res) => {
     // Access our User model and run .,findAll() method)
     // User inherits functionality from Sequelize Model class - findAll is one of those methods
     // this is the same as "SELECT * FROM users;" in SQL

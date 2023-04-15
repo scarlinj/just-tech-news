@@ -16,7 +16,7 @@ const userAuth = require('../../utils/auth');
 // Do not use "post" in any routes - will take these routes and implement them to another router instance and then prefix with /post
 
 // get all posts along with the users - removed "req" in the router.get call, since I don't requst specific attribute
-router.get('/', async (req, res) => {
+router.get('/', (req, res) => {
     console.log('loaded post-routes');
     Post.findAll({
       // Query configurationcreated_at is automatically generated because of Sequelize timestamp
