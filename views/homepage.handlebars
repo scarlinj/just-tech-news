@@ -1,14 +1,13 @@
 {{!-- The below creates content to fill the page.  Since this is the home page, render the content of the home page --}}
 
+
+{{!-- troubleshooting: the below loads instead of the dashboard handlebar --}}
 <ol class="post-list">
-  <body>
-  News of the day:
-  </body>
-  <br>
-  </br>
+{{!-- load poasts --}}
   {{#each posts as |post|}}
   <li>
-    <article class="post">
+    {{!-- {{}} --}}
+    {{!-- <article class="post">
       <div class="title">
         <a href="{{post.post_url}}" target="_blank">{{post.title}}</a>
         <span>({{post.post_url}})</span>
@@ -19,7 +18,7 @@
         |
         <a href="/post/{{post.id}}">{{post.comments.length}} comment(s)</a>
       </div>
-    </article>
+    </article> --}}
   </li>
   {{/each}}
 </ol>

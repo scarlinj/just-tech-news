@@ -1,11 +1,11 @@
 const router = require('express').Router();
-const { Comment, User } = require('../../models');
+const { Comment } = require('../../models');
 const userAuth = require('../../utils/auth');
 
 // Do not use "comment" in any routes - will take these routes and implement them to another router instance and then prefix with /comment
 
 
-router.get('/', (res) => {
+router.get('/', (req, res) => {
     // console.log('======================');
     Comment.findAll({
       // Query configuration created_at is automatically generated because of Sequelize timestamp
@@ -22,21 +22,26 @@ router.get('/', (res) => {
     .then(dbCommentData => res.json(dbCommentData))
     .catch(err => {
       console.log(err);
+      // only can call res once?
       res.status(500).json(err);
     });
 });
 
 router.post('/', userAuth, (req, res) => {
+  if (req.session) {
     Comment.create({
         comment_text: req.body.comment_text,
-        user_id: req.body.user_id,
-        post_id: req.body.post_id
+        post_id: req.body.post_id,
+
+        user_id: req.body.user_id
+        
       })
         .then(dbCommentData => res.json(dbCommentData))
         .catch(err => {
           console.log(err);
           res.status(400).json(err);
         });
+      }
 });
 
 router.delete('/:id', userAuth, (req, res) => {
@@ -47,14 +52,14 @@ router.delete('/:id', userAuth, (req, res) => {
   })
     .then(dbCommentData => {
       if (!dbCommentData) {
-        res.status(404).json({ message: 'No comment found with this id' });
+        res.status(404).json({ message: 'No comment with this id' });
         return;
       }
       res.json(dbCommentData);
     })
     .catch(err => {
       console.log(err);
-      res.status(500).json(err);
+      // res.status(500).json(err);
     });
 });
 

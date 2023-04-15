@@ -24,7 +24,7 @@ router.get('/', (res) => {
         .then(dbUserData => res.json(dbUserData))
         .catch(err => {
             console.log(err);
-            res.status(500).json(err);
+            // res.status(500).json(err);
             return;
         });
 });

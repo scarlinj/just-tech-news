@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const sequelize = require('../../config/connection');
 const {
     // include the User route to retrieve information about user associated with each post.
     // In a query to the post table, we would like to retrieve not only information about 
@@ -10,13 +9,14 @@ const {
     Vote,
     Comment
 } = require('../../models');
+const sequelize = require('../../config/connection');
 const userAuth = require('../../utils/auth');
 
 
 // Do not use "post" in any routes - will take these routes and implement them to another router instance and then prefix with /post
 
 // get all posts along with the users - removed "req" in the router.get call, since I don't requst specific attribute
-router.get('/', async (res) => {
+router.get('/', async (req, res) => {
     console.log('loaded post-routes');
     Post.findAll({
       // Query configurationcreated_at is automatically generated because of Sequelize timestamp
