@@ -5,7 +5,7 @@ const { Post, User, Comment, Vote } = require('../models');
 // render a homepage, since we don't have the HTML.  This gets all posts.
 router.get('/', (req, res) => {
 
-  // console.log(req.session);
+  console.log(req.session);
   console.log('loaded home-routes');
 
   Post.findAll({
