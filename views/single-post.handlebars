@@ -28,7 +28,7 @@
 
 </article>
 
-{{!-- {{#if loggedIn}} --}}
+{{#if loggedIn}}
 
 <form class="comment-form">
   <div>
@@ -40,10 +40,6 @@
     <button type="button" class="upvote-btn">upvote</button>
   </div>
 </form>
-{{/if}}
-
-
-{{#if loggedIn}}
 
 <script src="/javascript/comment.js"></script>
 <script src="/javascript/upvote.js"></script>
@@ -52,4 +48,4 @@
 
 <a href="/login" textcolor="green" textborder="1px">login to make a comment</a>
 
-{{!-- {{/if}} --}}
+{{/if}}

@@ -102,7 +102,7 @@ router.get('/post/:id', (req, res) => {
     })
     .catch(err => {
       console.log(err);
-      // res.status(500).json(err);
+      res.status(500).json(err);
     });
   // tested below, which renders in /post/id address
   // const post = {
@@ -117,7 +117,6 @@ router.get('/post/:id', (req, res) => {
   //   }
   // };
 
-  // res.render('single-post', { post });
 });
 
 // render a dashboard after logged in.  This gets user posts. -- moved to dashboard-routes.js in controllers folder
