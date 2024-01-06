@@ -95,13 +95,22 @@ router.post('/', userAuth, (req, res) => {
 
 // PUT /api/posts/upvote
 router.put('/upvote', userAuth, (req, res) => {
+  // make sure the session exists first
   if (req.session) {
-    Vote.create({
-    user_id: req.body.user_id,
-    post_id: req.body.post_id
-  })
-    .then(dbPostData => res.json(dbPostData))
-    .catch(err => res.json(err));
+    // pass session id along with all destructured properties on req.body
+    Post.upvote({ ...req.body, user_id: req.session.user_id }, { Vote, Comment, User })
+    .then(updatedVoteData => res.json(updatedVoteData))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+    // Vote.create({
+    // user_id: req.body.user_id,
+    // post_id: req.body.post_id
+  //   Post.
+  // })
+  //   .then(dbPostData => res.json(dbPostData))
+  //   .catch(err => res.json(err));
 }});
 
 // PUT /api/users/1

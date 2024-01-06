@@ -7,8 +7,7 @@ const { Post, User, Comment } = require('../models');
 // router.get('/', userAuth, (req, res) => {
 router.get('/', (req, res) => {
 
-    // console.log(req.session);
-    console.log('loaded dashboard-routes');
+    console.log(req.session);
 
     Post.findAll({
         where: {

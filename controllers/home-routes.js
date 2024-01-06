@@ -6,7 +6,6 @@ const { Post, User, Comment, Vote } = require('../models');
 router.get('/', (req, res) => {
 
   console.log(req.session);
-  console.log('loaded home-routes');
 
   Post.findAll({
   attributes: [
@@ -40,7 +39,7 @@ router.get('/', (req, res) => {
       const posts = dbPostData.map(post => post.get({ plain: true }));
       // pass a single post object into the homepage template
       console.log(dbPostData[0]);
-      // render the posts array in the homepage template
+      // render the posts array in the homepage template engine. Use res.render() and specify which template we want to use ('homepage', in this case)
       res.render('homepage', { posts, loggedIn: req.session.loggedIn });
     })
     .catch(err => {
