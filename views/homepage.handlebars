@@ -1,6 +1,12 @@
+{{!-- The below creates content to fill the page.  Since this is the home page, render the content of the home page --}}
+
+
+{{!-- troubleshooting: the below loads instead of the dashboard handlebar --}}
 <ol class="post-list">
+{{!-- load poasts --}}
   {{#each posts as |post|}}
   <li>
+    {{!-- {{}} --}}
     <article class="post">
       <div class="title">
         <a href="{{post.post_url}}" target="_blank">{{post.title}}</a>

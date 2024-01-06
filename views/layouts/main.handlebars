@@ -16,7 +16,7 @@
     </h1>
       <nav>
         {{#if loggedIn}}
-        <a href="/dashboard">dashboard</a>
+        <a href="/dashboard">User dashboard</a>
         {{!-- logout will not be an actual page to visit, but should still look like a link --}}
         <button id="logout" class="btn-no-style">logout</button>
         {{else}}
@@ -33,7 +33,7 @@
   </div>
   
   {{#if loggedIn}}
-    <script src='/public/javascript/logout.js'></script>
+    <script src='/javascript/logout.js'></script>
   {{/if}}
 </body>
 

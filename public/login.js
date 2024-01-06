@@ -6,11 +6,11 @@ async function loginFormHandler(event) {
     const password = document.querySelector('#password-login').value.trim();
     
     if (email && password) {
-    const response = await fetch('/api/users/login', {
+    const response = await fetch('/api/users', {
         method: 'post',
         body: JSON.stringify({
-            email,
-            password
+        email,
+        password
         }),
         headers: { 'Content-Type': 'application/json' }
     });
@@ -19,7 +19,7 @@ async function loginFormHandler(event) {
         document.location.replace('/dashboard');
     } else {
         alert(response.statusText);
-        document.location.replace('/login');
+        document.location.replace('/');
         console.log(response.statusText);
         console.log('didnt load.');
     }
@@ -40,12 +40,12 @@ async function signupFormHandler(event) {
     if (username && email && password) {
     // make a fetch() POST request to /api/users/ - assign this to variable "response" in order to avoid using .catch or .then in the argument
     // to use await, just add "await" before the function
-    const response = await fetch('/api/users', {
+    const response = await fetch('/api/users/login', {
         method: 'post',
         body: JSON.stringify({
-            username,
-            email,
-            password
+        username,
+        email,
+        password
         }),
         headers: { 'Content-Type': 'application/json' }
     });
@@ -62,6 +62,6 @@ async function signupFormHandler(event) {
 
 
 
+document.querySelector('.signup-form').addEventListener('submit', signupFormHandler);
 document.querySelector('.login-form').addEventListener('submit', loginFormHandler);
 
-document.querySelector('.signup-form').addEventListener('submit', signupFormHandler);
